@@ -1,6 +1,7 @@
 from CRUD_usuarios import usuarios
 from CRUD_habitos import habitos
 from CRUD_registros import registros
+from relatorios import relatorios
 
 def menu_principal():
     print("\033[1;36m")
@@ -8,7 +9,8 @@ def menu_principal():
     print("1 - Usuários")
     print("2 - Hábitos")
     print("3 - Registros Diários")
-    print("4 - Sair")
+    print("4 - Relatórios")
+    print("5 - Sair")
     print("======================================================")
     print("\033[0m")
 
@@ -27,6 +29,9 @@ def app():
             registros()
 
         elif opcao == "4":
+            relatorios()
+
+        elif opcao == "5":
             print("\nSaindo do sistema... Até logo!\n")
             break
         
