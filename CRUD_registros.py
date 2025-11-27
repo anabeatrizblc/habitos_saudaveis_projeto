@@ -123,3 +123,24 @@ def atualizar_registro():
 
     salvar_registros(registros)
     print("\nRegistro atualizado com sucesso!\n")
+
+def registros():
+    while True:
+        print("\n--- Menu de Registros Diários ---")
+        print("1 - Criar registro")
+        print("2 - Listar registros")
+        print("3 - Atualizar registro")
+        print("4 - Voltar")
+
+        opcao = input("Escolha sua opção: ")
+
+        if opcao == "1":
+            criar_registro()
+        elif opcao == "2":
+            listar_registros()
+        elif opcao == "3":
+            atualizar_registro()
+        elif opcao == "4":
+            break
+        else:
+            print("\nOpção inválida!\n")
