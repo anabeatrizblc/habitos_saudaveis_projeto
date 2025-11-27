@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 arquivoUsuarios = "usuarios.json"
 
@@ -13,11 +14,24 @@ def salvar(dados):
     with open(arquivoUsuarios, "w", encoding="utf-8") as f:
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
+def calcular_idade(data_nascimento):
+    try:
+        nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d")
+    except:
+        return "Data inválida"
+    hoje = datetime.now()
+    idade = hoje.year - nascimento.year
+    if (hoje.month, hoje.day) < (nascimento.month, nascimento.day):
+        idade -= 1
+    return idade
+
 def criar_usuario():
     print("\n--- Criar novo usuário ---")
-
-    nome = input("Nome do usuário: ").capitalize()
-    email = input("Email do usuário: ").lower()
+    nome = input("Nome do usuário: ").strip().capitalize()
+    email = input("Email do usuário: ").strip().lower()
+    peso = float(input("Peso (kg): "))
+    altura = float(input("Altura (m): "))
+    data_nasc = input("Data de nascimento (AAAA-MM-DD): ")
 
     usuarios = carregar()
 
@@ -29,7 +43,10 @@ def criar_usuario():
     usuario = {
         "id": novo_id,
         "nome": nome,
-        "email": email
+        "email": email,
+        "peso": peso,
+        "altura": altura,
+        "data_nascimento": data_nasc
     }
 
     usuarios.append(usuario)
@@ -44,9 +61,20 @@ def listar_usuarios():
         print("\n/////////////// ERRO: Nenhum usuário cadastrado. ///////////////\n")
         return
 
-    print("\n--- Lista de Usuários ---\n")
+    print("\n========== Lista de Usuários ==========\n")
+
     for u in usuarios:
-        print(f"ID: {u['id']} - Nome: {u['nome']} - Email: {u['email']}")
+        idade = calcular_idade(u["data_nascimento"])
+        print(f"""
+ID: {u['id']}
+Nome: {u['nome']}
+Email: {u['email']}
+Peso: {u['peso']} kg
+Altura: {u['altura']} m
+Data de Nascimento: {u['data_nascimento']}
+Idade: {idade} anos
+----------------------------------------------
+""")
 
 def atualizar_usuario():
     usuarios = carregar()
@@ -58,7 +86,7 @@ def atualizar_usuario():
     listar_usuarios()
 
     try:
-        uid = int(input("\nInsira o ID do usuário que deseja atualizar: "))
+        uid = int(input("Insira o ID do usuário que deseja atualizar: "))
     except:
         print("\nID inválido.\n")
         return
@@ -69,13 +97,27 @@ def atualizar_usuario():
         print("\n/////////////// ERRO: Usuário não encontrado. ///////////////\n")
         return
 
-    print("\n1- Alterar nome\n2- Alterar email")
-    opcao = input("Escolha sua opção: ")
+    print("""
+O que deseja atualizar?
+1 - Nome
+2 - Email
+3 - Peso
+4 - Altura
+5 - Data de nascimento
+""")
 
-    if opcao == "1":
+    op = input("Escolha sua opção: ")
+
+    if op == "1":
         usuario["nome"] = input("Novo nome: ").capitalize()
-    elif opcao == "2":
+    elif op == "2":
         usuario["email"] = input("Novo email: ").lower()
+    elif op == "3":
+        usuario["peso"] = float(input("Novo peso (kg): "))
+    elif op == "4":
+        usuario["altura"] = float(input("Nova altura (m): "))
+    elif op == "5":
+        usuario["data_nascimento"] = input("Nova data (AAAA-MM-DD): ")
     else:
         print("\nOpção inválida.\n")
         return
@@ -93,7 +135,7 @@ def deletar_usuario():
     listar_usuarios()
 
     try:
-        uid = int(input("\nInsira o ID do usuário que deseja deletar: "))
+        uid = int(input("Insira o ID do usuário que deseja deletar: "))
     except:
         print("\nID inválido.\n")
         return
@@ -104,9 +146,9 @@ def deletar_usuario():
         print("\n/////////////// ERRO: Usuário não encontrado. ///////////////\n")
         return
 
-    opcao = input("Tem certeza que deseja deletar? ('Sim'/'Não'): ")
+    confirmar = input("Tem certeza que deseja deletar? ('Sim'/'Não'): ")
 
-    if opcao.lower() != "sim":
+    if confirmar.lower() != "sim":
         return
 
     usuarios = [u for u in usuarios if u["id"] != uid]
@@ -116,18 +158,26 @@ def deletar_usuario():
 
 def usuarios():
     while True:
-        print("\n1- Criar usuário\n2- Listar usuários\n3- Atualizar usuário\n4- Deletar usuário\n5- Voltar")
-        opcao = input("Escolha sua opção: ")
+        print("""
+1 - Criar usuário
+2 - Listar usuários
+3 - Atualizar usuário
+4 - Deletar usuário
+5 - Voltar
+""")
 
-        if opcao == "1":
+        op = input("Escolha sua opção: ")
+
+        if op == "1":
             criar_usuario()
-        elif opcao == "2":
+        elif op == "2":
             listar_usuarios()
-        elif opcao == "3":
+        elif op == "3":
             atualizar_usuario()
-        elif opcao == "4":
+        elif op == "4":
             deletar_usuario()
-        elif opcao == "5":
+        elif op == "5":
             break
         else:
-            print("\nOpção inválida.\n")
+            print("\nOpção inválida!\n")
+
