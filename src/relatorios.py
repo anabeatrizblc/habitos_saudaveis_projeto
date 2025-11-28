@@ -1,9 +1,9 @@
 import json
 import os
 
-arquivoUsuarios = "usuarios.json"
-arquivoHabitos = "habitos.json"
-arquivoRegistros = "registros.json"
+arquivoUsuarios = "data/usuarios.json"
+arquivoHabitos = "data/habitos.json"
+arquivoRegistros = "data/registros.json"
 
 def carregar_json(arquivo):
     if not os.path.exists(arquivo) or os.path.getsize(arquivo) == 0:

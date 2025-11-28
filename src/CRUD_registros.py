@@ -2,9 +2,9 @@ import json
 import os
 from datetime import date
 
-arquivoRegistros = "registros.json"
-arquivoUsuarios = "usuarios.json"
-arquivoHabitos = "habitos.json"
+arquivoRegistros = "data/registros.json"
+arquivoUsuarios = "data/usuarios.json"
+arquivoHabitos = "data/habitos.json"
 
 def carregar_registros():
     if not os.path.exists(arquivoRegistros) or os.path.getsize(arquivoRegistros) == 0:

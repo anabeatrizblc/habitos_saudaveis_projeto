@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-arquivoUsuarios = "usuarios.json"
+arquivoUsuarios = "data/usuarios.json"
 
 def carregar():
     if not os.path.exists(arquivoUsuarios) or os.path.getsize(arquivoUsuarios) == 0:

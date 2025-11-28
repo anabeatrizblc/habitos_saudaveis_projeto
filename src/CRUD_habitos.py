@@ -1,8 +1,8 @@
 import json
 import os
 
-arquivoUsuarios = "usuarios.json"
-arquivoHabitos = "habitos.json"
+arquivoUsuarios = "data/usuarios.json"
+arquivoHabitos = "data/habitos.json"
 
 
 def carregar_usuarios():

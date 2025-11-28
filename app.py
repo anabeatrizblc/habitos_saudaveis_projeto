@@ -1,7 +1,7 @@
-from CRUD_usuarios import usuarios
-from CRUD_habitos import habitos
-from CRUD_registros import registros
-from relatorios import relatorios
+from src.CRUD_usuarios import usuarios
+from src.CRUD_habitos import habitos
+from src.CRUD_registros import registros
+from src.relatorios import relatorios
 
 def menu_principal():
     print("\033[1;36m")
